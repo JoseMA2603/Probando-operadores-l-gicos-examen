@@ -75,7 +75,8 @@ document.addEventListener("DOMContentLoaded", function () {
             checkbox.type = 'checkbox';
             checkbox.id = `checkbox${i}`;
             label.appendChild(checkbox);
-            label.appendChild(document.createTextNode(` Casilla ${i}`));
+            // Cambia esta línea
+            label.appendChild(document.createTextNode(` ${i - 1}`)); // Usa 0 para la primera casilla y 1 para la segunda
             checkboxContainer.appendChild(label);
             checkboxes.push(checkbox);
         }
@@ -144,17 +145,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function convertToCSV(results) {
-        const headers = ['Casilla', 'Estado', ...operations];
+        const headers = ['Bit', 'Estado', ...operations];
         let csvContent = headers.join(',') + '\n';
-
+    
         results.checkboxes.forEach((state, index) => {
-            const row = [`Casilla ${index + 1}`, state ? 'Marcada' : 'No marcada'];
+            const row = [`${index}`, state ? 'Marcado' : 'No marcado']; // Cambia 'Casilla' por el número del bit
             operations.forEach(op => {
                 row.push(results.operations[op.toLowerCase()] ? 'True' : 'False');
             });
             csvContent += row.join(',') + '\n';
         });
-
+    
         return csvContent;
     }
 
